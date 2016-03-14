@@ -30,6 +30,8 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
+实现上， 获取 access_token 的方式，参考了 https://github.com/lanrion/weixin_authorize。 
+
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/aliexpress. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 

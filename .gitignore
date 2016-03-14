@@ -35,3 +35,7 @@ tmp/
 **/*.swp
 
 *.gem
+
+# 忽略 rvm gemset 的文件
+.ruby-gemset
+.ruby-version
