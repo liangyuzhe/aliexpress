@@ -10,5 +10,6 @@ require "aliexpress"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start
+require "pry"
+# IRB.start
+Pry.start

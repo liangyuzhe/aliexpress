@@ -1,6 +1,5 @@
 module Aliexpress
-  class Product
-    include Aliexpress::Base
+  class Product < Base
 
   end
 end

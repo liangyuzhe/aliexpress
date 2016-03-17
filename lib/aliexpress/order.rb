@@ -1,6 +1,5 @@
 module Aliexpress
-  class Order
-    include Aliexpress::Base
+  class Order < Base
 
   end
 end
