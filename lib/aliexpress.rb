@@ -4,11 +4,11 @@ require 'active_support/core_ext/module/attribute_accessors'
 require 'active_support/core_ext/hash/conversions'
 
 module Aliexpress
-  autoload :Base, File.expand_path('../aliexpress/base', __FILE__)
+  autoload :Configure, File.expand_path('../aliexpress/configure', __FILE__)
 
-  # class << self
-  #   include Base
-  # end
+  class << self
+    include Configure
+  end
 end
 
 Gem.find_files('aliexpress/*.rb').each { |path| require path }
