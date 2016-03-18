@@ -1,48 +1,33 @@
+# -*- encoding : utf-8 -*-
 require 'nestful'
 require 'openssl' # 生成特定的验证码
 require 'redis'
 require 'json'
+require 'hashie'
 module Aliexpress
   class Base
 
     ACCESS_TOKEN_KEY = 'aliexpress_access_token_key'.freeze
     REFRESH_TOKEN_KEY = 'aliexpress_refresh_token_key'.freeze
 
-    # TODO 配置信息，放置在单独的模型中。
-
-    # 请求 URL 组成部分
-    #
-    # http://gw.api.alibaba.com/openapi/param2/1/aliexpress.open/api.findAeProductById/100000?&_aop_timestamp=1375703483649&access_token=HMKSwKPeSHB7Zk7712OfC2Gn1-kkfVsaM-P&_aop_signature=DE1D9BDE00646F5C1704930003C9FC011AADDE25
-    #
-    mattr_accessor :api_url
-    self.api_url = 'http://gw.api.alibaba.com/openapi'
-
-    mattr_accessor :app_key
-    self.app_key = '44872398'
-
-    mattr_accessor :app_secret
-    self.app_secret = '1FyHgep5Mkh'
-
-    # TODO: redis 密码需要特定传入
-    mattr_accessor :redis
-    self.redis = Redis.new password: 'Fy958e5mmyb7Ta4H'
-
-    mattr_accessor :access_token
-    # self.access_token = '0549f04a-99f0-4434-9da5-48051c8594ab'
-
-    mattr_accessor :refresh_token
-    self.refresh_token = 'b6674082-c5e3-4fd7-b2d0-c2a440e45a0e'
+    # 配置信息 放在单独的模块中。
+    extend Aliexpress::Configure
 
     #
     # 拼接 请求 API 的链接
     #
     # @example http://gw.api.alibaba.com/dev/tools/api_test_intl.html
     #
-    # @note urlPath 的规则:
+    # @note urlPath 的规则: 将除了 _aop_signature 以外的其他所有参数都加入 signature 的生成
+    #       大多数的接口是不需要 _aop_timestamp(以毫秒表示)
     #
-    # @return [String] API 请求 url
+    # @return [Hash] 请求返回的相应
     def self.api_endpoint(api_version: 1, api_namespace: 'aliexpress.open', api_name: 'dev.test', params: {}, protocol: 'param2')
       url_path = "#{protocol}/#{api_version}/#{api_namespace}/#{api_name}/#{app_key}"
+
+      params.merge!({access_token: access_token
+                     # _aop_timestamp: Time.now.to_i * 1000
+                    })
 
       signature_factor = url_path.clone
 
@@ -54,10 +39,7 @@ module Aliexpress
 
       puts "signature = #{signature}"
 
-      params.merge!({access_token: access_token,
-                     _aop_signature: signature,
-                     _aop_timestamp: Time.now.to_i * 1000 # 时间戳是毫秒
-                    })
+      params.merge! _aop_signature: signature
 
       tmp_url = "#{api_url}/#{url_path}?#{params.map { |k, v| "#{k}=#{v}" }.join('&')}"
 
@@ -65,15 +47,16 @@ module Aliexpress
 
       response = Nestful.post tmp_url
 
-      puts response
+      puts "response = #{response}"
 
-      # 根据获取的返回值，抛出异常，刷新访问 token
-      response
+      # TODO: 根据获取的返回值，抛出异常，刷新访问 token
+      ::Hashie::Mash.new JSON.parse(response.body)
     end
 
     protected
 
-    # 通过 redis 获取 token
+    # 通过 redis 获取 token，并设置过期时间
+    #
     def self.access_token
       token = redis.get ACCESS_TOKEN_KEY
 
@@ -100,7 +83,7 @@ module Aliexpress
     #
     # 设置 refresh code
     #
-    # @param response [Hash] -
+    # @param response [Hash] - 接口返回的值
     def self.set_refresh_token(response)
       token = response['refresh_token']
 
@@ -114,7 +97,6 @@ module Aliexpress
 
     #
     # 重新获取 access_token
-    #
     #
     def self.refresh_access_token
       token_url = 'https://gw.api.alibaba.com/openapi/param2/1/system.oauth2/getToken'
@@ -171,7 +153,7 @@ module Aliexpress
     #
     # 例子： OpenSSL::HMAC.hexdigest OpenSSL::Digest.new('sha1'), '1FyHgep5Mkh', 'param2/1/aliexpress.open/api.getChildrenPostCategoryById/44872398cateId0'
     #
-    # 验证出错了，
+    # @note Digest::HMAC.hexdigest ruby2.1.5 还支持，2.3.0 就不支持了。
     def self.get_signature(signature_factor)
       OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), app_secret, signature_factor).upcase
       # Digest::HMAC.hexdigest(signature_factor, secret_key, Digest::SHA1).upcase
@@ -190,6 +172,5 @@ module Aliexpress
 
       puts response
     end
-
   end
 end

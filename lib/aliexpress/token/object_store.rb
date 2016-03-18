@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 module Aliexpress
   module Token
     class ObjectStore < Store

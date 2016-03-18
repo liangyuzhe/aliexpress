@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Aliexpress
   class Authorization
     mattr_accessor :auth_url

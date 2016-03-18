@@ -5,6 +5,7 @@ require 'active_support/core_ext/hash/conversions'
 
 module Aliexpress
   autoload :Configure, File.expand_path('../aliexpress/configure', __FILE__)
+  autoload :Base, File.expand_path('../aliexpress/base', __FILE__)
 
   class << self
     include Configure

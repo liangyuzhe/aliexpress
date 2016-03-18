@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 module Aliexpress
   module Token
     class RedisStore < Store
@@ -30,7 +30,7 @@ module Aliexpress
       end
 
       def weixin_redis
-        WeixinAuthorize.weixin_redis
+        Configure.weixin_redis
       end
     end
   end

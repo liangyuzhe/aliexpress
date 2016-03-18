@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 module Aliexpress
-  class Product < Base
-
+  class Freight < Base
   end
 end
