@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 require 'redis'
 module Aliexpress
-  # 存放配置信息
+  # 存放 gem 配置信息
   module Configure
 
     # 请求 URL 组成部分
