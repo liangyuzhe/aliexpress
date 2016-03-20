@@ -21,8 +21,6 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
-
 文件的目录结构： 
 
 ```
@@ -49,6 +47,15 @@ TODO: Write usage instructions here
     └── aliexpress.rb
 ```
 
+配置参数： 
+
+```
+Aliexpress.app_key = 'Your app key'
+Aliexpress.app_secret = 'Your app secret' 
+Aliexpress.redis = Redis.new 
+```
+
+**TODO**: 配置获取 code 的授权还没有完成， 这个参考谁。
 
 ## Development
 
