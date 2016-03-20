@@ -27,18 +27,24 @@ module Aliexpress
 
     # 每日曝光数据
     # 地址： http://gw.api.alibaba.com/dev/doc/intl/api.htm?ns=aliexpress.open&n=api.queryProductExposedInfoEverydayById&v=1
+    #
+    # @param [Hash] params
     def self.queryProductExposedInfoEverydayById(params = {})
       api_endpoint 'api.queryProductExposedInfoEverydayById', params
     end
 
     # 每日销量数据
     # 地址： http://gw.api.alibaba.com/dev/doc/intl/api.htm?ns=aliexpress.open&n=api.queryProductSalesInfoEverydayById&v=1
+    #
+    # @param [Hash] params
     def self.queryProductSalesInfoEverydayById(params = {})
       api_endpoint 'api.queryProductSalesInfoEverydayById', params
     end
 
     # 每日收藏数
     # 地址： http://gw.api.alibaba.com/dev/doc/intl/api.htm?ns=aliexpress.open&n=api.queryProductFavoritedInfoEverydayById&v=1
+    #
+    # @param [Hash] params
     def self.queryProductFavoritedInfoEverydayById(params = {})
       api_endpoint 'api.queryProductFavoritedInfoEverydayById', params
     end

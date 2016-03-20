@@ -10,11 +10,10 @@ module Aliexpress
     ACCESS_TOKEN_KEY = 'aliexpress_access_token_key'.freeze
     REFRESH_TOKEN_KEY = 'aliexpress_refresh_token_key'.freeze
 
-    # 配置信息 放在单独的模块中。
+    # 将 +配置信息+ 放在单独的模块中。
     extend Aliexpress::Configure
 
-
-    # 覆盖父类中的同名方法
+    # API 封装调用接口封装
     #
     # @param [string] api_name - 速卖通 API 的名字
     # @param [Hash] params - api 的应用级参数
@@ -23,12 +22,11 @@ module Aliexpress
       _api_endpoint(api_name: api_name, params: params)
     end
 
-
-
     protected
 
     # 通过 redis 获取 token，并设置过期时间
     #
+    # @return 返回获取 access_token
     def self.access_token
       token = redis.get ACCESS_TOKEN_KEY
 
