@@ -17,6 +17,14 @@ module Aliexpress
     mattr_accessor :app_secret
     self.app_secret = '1FyHgep5Mkh'
 
+    # 获取授权的地址
+    mattr_accessor :auth_url
+    self.auth_url = 'http://authhz.alibaba.com/auth/authorize.htm'
+
+    # 回调地址
+    mattr_accessor :redirect_uri
+    self.redirect_uri = ''
+
     mattr_accessor :redis
     self.redis = Redis.new password: 'Fy958e5mmyb7Ta4H'
 

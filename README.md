@@ -29,24 +29,24 @@ TODO: Write usage instructions here
 ├── bin
 │   ├── console
 │   └── setup
-├── lib
-│   ├── aliexpress
-│   │   ├── anouncement.rb
-│   │   ├── authorization.rb
-│   │   ├── base.rb
-│   │   ├── category.rb
-│   │   ├── configure.rb
-│   │   ├── freight.rb
-│   │   ├── logistics.rb
-│   │   ├── message.rb
-│   │   ├── order.rb
-│   │   ├── product.rb
-│   │   ├── token
-│   │   │   ├── object_store.rb
-│   │   │   ├── redis_store.rb
-│   │   │   └── store.rb
-│   │   └── version.rb
-│   └── aliexpress.rb
+└── lib
+    ├── aliexpress
+    │   ├── authorization.rb - 授权相关
+    │   ├── base.rb - 基本类
+    │   ├── category.rb - 类目
+    │   ├── common.rb - 公共
+    │   ├── configure.rb - 配置信息
+    │   ├── data.rb - 数据
+    │   ├── evaluation.rb - 评价接口
+    │   ├── freight.rb - 运费
+    │   ├── logistics.rb - 物流信息
+    │   ├── marketing.rb - 营销
+    │   ├── message.rb - 站内信
+    │   ├── order.rb - 较易
+    │   ├── product.rb - 产品
+    │   ├── image.rb - 图片相关的接口, 图片银行 和 上传图片
+    │   └── version.rb
+    └── aliexpress.rb
 ```
 
 
